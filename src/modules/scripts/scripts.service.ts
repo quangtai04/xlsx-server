@@ -190,6 +190,7 @@ export class ScriptsService {
           path: path,
           path_result: config?.path_result,
           file_name_result: 'THPT.xlsx',
+          path_data_error: config?.path_error_data,
         });
         break;
       case TYPE_FILE.PGD:
@@ -197,6 +198,7 @@ export class ScriptsService {
           path: path,
           path_result: config?.path_result,
           file_name_result: 'PGD.xlsx',
+          path_data_error: config?.path_error_data,
         });
         break;
       case TYPE_FILE.TEMPLATE:
@@ -246,7 +248,7 @@ export class ScriptsService {
                 cell_thpt.v += cell.v;
                 if (
                   !isNullOrUndefined(config?.path_data_error) &&
-                  cell?.v !== parseInt(cell?.v)
+                  cell?.v !== Math.floor(cell?.v)
                 ) {
                   if (!fs.existsSync(config?.path_data_error)) {
                     await fs.writeFileSync(config?.path_data_error, '');
