@@ -1,0 +1,1 @@
+pkg . --targets node16-win-x64 --output xlsx-server.exe
