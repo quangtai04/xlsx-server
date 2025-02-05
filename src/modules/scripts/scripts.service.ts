@@ -259,7 +259,7 @@ export class ScriptsService {
                   );
                   await fs.writeFileSync(
                     config?.path_data_error,
-                    `${error}\nPATH: ${config?.path} - SHEET: ${sheet_name} - ROW: ${column}${row}`,
+                    `${error}\nPATH: ${config?.path} - SHEET: ${sheet_name} - CELL: ${column}${row}`,
                   );
                 }
               }
