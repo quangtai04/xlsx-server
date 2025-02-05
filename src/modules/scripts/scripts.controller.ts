@@ -12,6 +12,7 @@ export interface DATA_BODY {
   path_pdt: string;
   path_thpt: string;
   path_result: string;
+  path_error_data: string;
 }
 @Controller('scripts')
 export class ScriptsController {

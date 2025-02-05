@@ -119,6 +119,7 @@ export class ScriptsService {
             },
             {
               path_result: data.path_result,
+              path_error_data: data.path_error_data,
             },
           );
           //
@@ -178,6 +179,7 @@ export class ScriptsService {
     },
     config?: {
       path_result?: string;
+      path_error_data?: string;
     },
   ): Promise<void> {
     const workbook_current = XLSX.readFile(path);
@@ -212,6 +214,7 @@ export class ScriptsService {
     config?: {
       path?: string;
       path_result?: string;
+      path_data_error?: string;
       file_name_result?: string;
     },
   ): Promise<void> {
@@ -241,6 +244,22 @@ export class ScriptsService {
               const cell_thpt = worksheet_thpt?.[`${column}${row}`];
               if (isNumber(cell?.v) && isNumber(cell_thpt?.v)) {
                 cell_thpt.v += cell.v;
+                if (
+                  !isNullOrUndefined(config?.path_data_error) &&
+                  cell?.v !== parseInt(cell?.v)
+                ) {
+                  if (!fs.existsSync(config?.path_data_error)) {
+                    await fs.writeFileSync(config?.path_data_error, '');
+                  }
+                  const error = await fs.readFileSync(
+                    config?.path_data_error,
+                    'utf8',
+                  );
+                  await fs.writeFileSync(
+                    config?.path_data_error,
+                    `${error}\nPATH: ${config?.path} - SHEET: ${sheet_name} - ROW: ${column}${row}`,
+                  );
+                }
               }
             }
           }
